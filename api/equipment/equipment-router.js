@@ -13,14 +13,21 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/", checkRoleOwner, async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const user_id = req.decodedToken.subject;
-    let equipment = { ...req.body, user_id: user_id };
-    equipment = await Equipment.add(equipment);
-    res.status(201).json(equipment);
+    const { name, imgUrl, description, availableForRent } = req.body;
+    let equipment = {
+      equipment_name: name,
+      equipment_img: imgUrl,
+      equipment_description: description,
+      equipment_available: availableForRent,
+      user_id: user_id,
+    };
+    const added = await Equipment.add(equipment);
+    res.status(201).json(added);
   } catch (err) {
-    next();
+    next(err);
   }
 });
 
@@ -28,17 +35,25 @@ router.put("/:equipment_id", checkRoleOwner, async (req, res, next) => {
   try {
     const user_id = req.decodedToken.subject;
     const { equipment_id } = req.params;
-    let equipment = Equipment.findById(equipment_id);
-    if (equipment && user_id === equipment.user_id) {
-      equipment = await Equipment.updateById(equipment_id, req.body);
-      res.status(200).json(equipment);
-    } else if (!equipment) {
+    const { name, imgUrl, description, availableForRent } = req.body;
+    const existing = await Equipment.findById(equipment_id);
+    if (existing && user_id === existing.user_id) {
+      const equipment = {
+        equipment_name: name,
+        equipment_img: imgUrl,
+        equipment_description: description,
+        equipment_available: availableForRent,
+        user_id: user_id,
+      };
+      const updated = await Equipment.updateById(equipment_id, equipment);
+      res.status(200).json(updated);
+    } else if (!existing) {
       res.status(404).json(`equipment with id ${equipment_id} doesn't exist`);
     } else {
       res.status(401).json("user must own the equipment");
     }
   } catch (err) {
-    next();
+    next(err);
   }
 });
 
@@ -46,7 +61,7 @@ router.delete("/:equipment_id", checkRoleOwner, async (req, res, next) => {
   try {
     const user_id = req.decodedToken.subject;
     const { equipment_id } = req.params;
-    let equipment = Equipment.findById(equipment_id);
+    let equipment = await Equipment.findById(equipment_id);
     if (equipment && user_id === equipment.user_id) {
       equipment = await Equipment.deleteById(equipment_id);
       res.status(200).json(equipment);
@@ -56,7 +71,7 @@ router.delete("/:equipment_id", checkRoleOwner, async (req, res, next) => {
       res.status(401).json("user must own the equipment");
     }
   } catch (err) {
-    next();
+    next(err);
   }
 });
 
