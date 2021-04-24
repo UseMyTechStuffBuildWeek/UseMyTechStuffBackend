@@ -17,7 +17,7 @@ server.use(cors());
 
 server.use("/api/auth", authRouter);
 server.use("/api/users", userRouter);
-server.use("/api/equipment");
+server.use("/api/equipment", equipmentRouter);
 
 const sessionOptions = {
   name: "monkey",

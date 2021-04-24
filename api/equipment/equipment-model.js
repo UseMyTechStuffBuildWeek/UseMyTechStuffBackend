@@ -1,9 +1,29 @@
 const db = require("../data/db-config");
 
-function find() {
-  return db("equipment as e")
+async function find() {
+  const equipmentList = await db("equipment as e")
     .join("users as u", "e.user_id", "=", "u.user_id")
-    .select("u.user_id as owner_id", "u.username as owner_username", "e.*");
+    .select(
+      "u.user_id",
+      "u.username",
+      "e.equipment_id",
+      "e.equipment_name",
+      "e.equipment_img",
+      "e.equipment_description",
+      "e.equipment_available"
+    );
+
+  const result = equipmentList.map((equipment) => {
+    return {
+      owner: { id: equipment.user_id, username: equipment.username },
+      id: equipment.equipment_id,
+      name: equipment.equipment_name,
+      imgUrl: equipment.equipment_img,
+      description: equipment.equipment_description,
+      availableForRent: equipment.equipment_available,
+    };
+  });
+  return result;
 }
 
 function findById(equipment_id) {
@@ -11,8 +31,11 @@ function findById(equipment_id) {
 }
 
 async function add(equipment) {
-  const [equipment_id] = db("equipment").insert(equipment);
-  return db("equipment").findById(equipment_id);
+  const [equipment_id] = await db("equipment").insert(
+    equipment,
+    "equipment_id"
+  );
+  return findById(equipment_id);
 }
 
 async function deleteById(equipment_id) {
