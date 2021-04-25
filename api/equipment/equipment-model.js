@@ -1,4 +1,5 @@
 const db = require("../data/db-config");
+const Requests = require("../requests/requests-model");
 
 async function find() {
   const equipmentList = await db("equipment as e")
@@ -14,9 +15,10 @@ async function find() {
     );
 
   const result = equipmentList.map((equipment) => {
+    const { equipment_id } = equipment;
     return {
       owner: { id: equipment.user_id, username: equipment.username },
-      id: equipment.equipment_id,
+      id: equipment_id,
       name: equipment.equipment_name,
       imgUrl: equipment.equipment_img,
       description: equipment.equipment_description,
