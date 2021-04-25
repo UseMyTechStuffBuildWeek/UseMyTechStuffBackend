@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const User = require("../users/users-model.js");
 const { JWT_SECRET } = require("../secrets/index.js");
 const jwt = require("jsonwebtoken")
-const {validateRoleName, checkRegistration, checkUsernameExists } = require("./auth-middleware.js");
+const { validateRoleName, checkRegistration, checkUsernameExists } = require("./auth-middleware.js");
 
 
 router.post("/register", validateRoleName, checkRegistration, (req, res, next) => {
@@ -61,6 +61,7 @@ function buildToken(user){
     const payload = {
       subject: user.user_id,
       username: user.username,
+      role: user.role
     }
     const options = {
       expiresIn: '1d',

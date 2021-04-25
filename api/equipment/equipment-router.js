@@ -1,6 +1,6 @@
 const express = require("express");
 const Equipment = require("./equipment-model");
-const { checkRoleOwner } = require("../middleware/middleware.js");
+const { checkRoleOwner, restricted } = require("../middleware/middleware.js");
 
 const router = express.Router();
 
@@ -31,9 +31,10 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.put("/:equipment_id", checkRoleOwner, async (req, res, next) => {
+router.put("/:equipment_id", restricted, checkRoleOwner("owner"), async (req, res, next) => {
   try {
     const user_id = req.decodedToken.subject;
+    console.log(user_id)
     const { equipment_id } = req.params;
     const { name, imgUrl, description, availableForRent } = req.body;
     const existing = await Equipment.findById(equipment_id);
