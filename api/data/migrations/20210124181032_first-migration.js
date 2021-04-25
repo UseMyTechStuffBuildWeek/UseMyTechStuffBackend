@@ -11,7 +11,6 @@ exports.up = async (knex) => {
       tbl.increments("equipment_id");
       tbl.string("equipment_name", 200).notNullable();
       tbl.string("equipment_description", 320).notNullable();
-      tbl.boolean("equipment_available").notNullable();
       tbl.string("equipment_img").notNullable();
       tbl
         .integer("user_id")
