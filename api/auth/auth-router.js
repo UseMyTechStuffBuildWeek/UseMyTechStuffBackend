@@ -26,7 +26,7 @@ router.post(
 );
 
 router.post("/login", checkUsernameExists, (req, res) => {
-  const { username, password, role } = req.body;
+  const { username, password } = req.body;
 
   if (req.body) {
     User.findBy({ username: username })
@@ -35,7 +35,7 @@ router.post("/login", checkUsernameExists, (req, res) => {
           const token = buildToken(user);
           res
             .status(200)
-            .json({ message: `${username} is back!`, token, role });
+            .json({ message: `${username} is back!`, token, role: user.role });
         } else {
           res.status(401).json({ message: "Invalid credentials" });
         }
