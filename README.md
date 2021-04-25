@@ -60,30 +60,51 @@ Status: 200 OK
 -----------------------------------------------------------------------------------------
 
 ### GET - Get All Equipment
+<details>
+<summary>https://use-my-tech-app.herokuapp.com/api/equipment</summary>
+</details>
 
 -----------------------------------------------------------------------------------------
 
 ### POST - Add Equipment
+<details>
+<summary>https://use-my-tech-app.herokuapp.com/api/equipment</summary>
+</details>
 
 -----------------------------------------------------------------------------------------
 
 ### PUT - Update Equipment By ID
+<details>
+<summary>https://use-my-tech-app.herokuapp.com/api/equipment/:equipment_id</summary>
+</details>
 
 -----------------------------------------------------------------------------------------
 
 ### DELETE - Remove Equipment By ID
+<details>
+<summary>https://use-my-tech-app.herokuapp.com/api/equipment/:equipment_id</summary>
+</details>
 
 -----------------------------------------------------------------------------------------
 
 ### GET - Get Rental Requests
+<details>
+<summary>https://use-my-tech-app.herokuapp.com/api/requests</summary>
+</details>
 
 -----------------------------------------------------------------------------------------
 
 ### POST - Create A Request To Rent
+<details>
+<summary>https://use-my-tech-app.herokuapp.com/api/requests</summary>
+</details>
 
 -----------------------------------------------------------------------------------------
 
 ### DELETE - Delete Rental Request By ID
+<details>
+<summary>https://use-my-tech-app.herokuapp.com/api/requests/:request_id</summary>
+</details>
 
 -----------------------------------------------------------------------------------------
 
