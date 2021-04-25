@@ -115,9 +115,9 @@ what you get back:
 what you get back:
 [
     {
-        "equipment_id": 1, <- id of equipment
-        "owner_id": 1, <- id of who owns the equipment
-        "renter_id": 2, <- id of person who sent the request
+        "equipment_id": 1, --id of equipment
+        "owner_id": 1, --of who owns the equipment
+        "renter_id": 2, --of person who sent the request
     },
     {
         "equipment_id": 1,
