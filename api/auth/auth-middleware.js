@@ -1,6 +1,29 @@
-// const { JWT_SECRET } = require("../secrets/index")
-// const {  } = require("../users/users-model.js");
-// const jwt = require('jsonwebtoken');
+const {findBy} = require("../users/users-model")
+
+const checkUsernameExists = async (req, res, next) => {
+    try{
+      const [user] = await findBy({username: req.body.username})
+      if(!user){
+        next({status: 401, 
+        message: "Invalid credentials"})
+      } else {
+        req.user = user
+        next()
+      }
+    } 
+    catch(err){
+      next(err)
+    }
+  }
+
+
+const checkRegistration = (req, res, next) => {
+    if (!req.body.username || !req.body.password || !req.body.role){
+        res.status(422).json({message: 'username, role, and password required'})
+    } else {
+        next()
+    }
+}
 
 const validateRoleName = (req, res, next) => {
     if(req.body.role === "renter" || req.body.role.trim() === "renter"){
@@ -16,5 +39,5 @@ const validateRoleName = (req, res, next) => {
 }
 
 module.exports = {
-    validateRoleName
+    validateRoleName, checkRegistration, checkUsernameExists
 }

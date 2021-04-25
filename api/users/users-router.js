@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const User = require("./users-model.js");
-const {checkRoleRenter, checkRoleOwner} = require("../middleware/middleware.js")
+const {checkRoleRenter, checkRoleOwner, restricted} = require("../middleware/middleware.js")
 
-router.get("/owner", checkRoleOwner("owner"), (req, res, next) => {
+router.get("/owner", checkRoleOwner("owner"), restricted, (req, res, next) => {
     User.find()
         .then(users => {
             res.json(users)
@@ -10,7 +10,7 @@ router.get("/owner", checkRoleOwner("owner"), (req, res, next) => {
         .catch(next)
 })
 
-router.get("/renter", checkRoleRenter("renter"), (req, res, next) => {
+router.get("/renter", checkRoleRenter("renter"), restricted, (req, res, next) => {
     User.find()
         .then(users => {
             res.json(users)

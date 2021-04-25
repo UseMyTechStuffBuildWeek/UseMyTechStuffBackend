@@ -3,10 +3,10 @@ const bcrypt = require("bcryptjs");
 const User = require("../users/users-model.js");
 const { JWT_SECRET } = require("../secrets/index.js");
 const jwt = require("jsonwebtoken")
-const {validateRoleName} = require("./auth-middleware.js");
+const {validateRoleName, checkRegistration, checkUsernameExists } = require("./auth-middleware.js");
 
 
-router.post("/register", validateRoleName, (req, res, next) => {
+router.post("/register", validateRoleName, checkRegistration, (req, res, next) => {
   const { username, role, password } = req.body
 
   const hash = bcrypt.hashSync(password, 8)
@@ -18,7 +18,7 @@ router.post("/register", validateRoleName, (req, res, next) => {
     .catch(next)
 })
 
-router.post("/login", (req, res) => {
+router.post("/login", checkUsernameExists, (req, res) => {
     const {username, password, role} = req.body
 
     if(req.body){
