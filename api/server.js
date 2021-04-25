@@ -6,7 +6,6 @@ const session = require("express-session");
 const KnexSessionStore = require("connect-session-knex")(session);
 
 const authRouter = require("./auth/auth-router.js");
-const userRouter = require("./users/users-router.js");
 const equipmentRouter = require("./equipment/equipment-router");
 const requestsRouter = require("./requests/requests-router");
 
@@ -17,7 +16,6 @@ server.use(helmet());
 server.use(cors());
 
 server.use("/api/auth", authRouter);
-server.use("/api/users", userRouter);
 server.use("/api/equipment", equipmentRouter);
 server.use("/api/requests", requestsRouter);
 

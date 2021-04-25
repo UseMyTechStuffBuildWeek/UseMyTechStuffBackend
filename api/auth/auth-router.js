@@ -15,7 +15,6 @@ router.post(
   checkRegistration,
   (req, res, next) => {
     const { username, role, password } = req.body;
-
     const hash = bcrypt.hashSync(password, 8);
 
     User.add({ username, role, password: hash })
@@ -52,7 +51,7 @@ router.post("/login", checkUsernameExists, (req, res) => {
   }
 });
 
-router.delete("/logout", (req, res, next) => {
+router.delete("/logout", (req, res) => {
   if (req.session) {
     req.session.destroy((err) => {
       if (err) {

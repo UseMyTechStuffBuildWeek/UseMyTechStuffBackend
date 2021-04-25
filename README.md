@@ -1,60 +1,262 @@
-# Build Week Scaffolding for Node and PostgreSQL
+# Build Week Food Truck
 
-## Video Tutorial
+### POST - Create Account
+create a user with role type of renter or owner
+<details>
+<summary>https://foodtruckbuildweek.herokuapp.com/api/auth/register</summary>
 
-The following tutorial explains how to set up this project using PostgreSQL and Heroku.
+```JSON
+what you need:
+{
+    "username": "marco",  
+    "password": "foobar", 
+    "role": "owner"
+    
+}
 
-[![Setting up PostgreSQL for Build Week](https://img.youtube.com/vi/kTO_tf4L23I/maxresdefault.jpg)](https://www.youtube.com/watch?v=kTO_tf4L23I)
+what you get back:
+{
+    "user_id": 12,
+    "username": "mary",
+    "password": "$2a$08$cHlS2uqmuiHGvZcqcnFKNOnWcHJD49nDpINZslFqKaQi8dWMIoclC",
+    "role": "owner"
+}
+```
+</details>
 
-## Requirements
+-----------------------------------------------------------------------------------------
 
-- [PostgreSQL, pgAdmin 4](https://www.postgresql.org/download/) and [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) installed in your local machine.
-- A Heroku app with the [Heroku PostgreSQL Addon](https://devcenter.heroku.com/articles/heroku-postgresql#provisioning-heroku-postgres) added to it.
-- Development and testing databases created with [pgAdmin 4](https://www.pgadmin.org/docs/pgadmin4/4.29/database_dialog.html).
+### POST - Login
+<details>
+<summary>https://foodtruckbuildweek.herokuapp.com/api/auth/login</summary>
 
-## Starting a New Project
+```JSON
+what you need:
+role can be owner or renter
+{
+    "username": "marco",  
+    "password": "foobar", 
+    "role": "owner"
+    
+}
 
-- Create a new repository using this template, and clone it to your local.
-- Create a `.env` file and follow the instructions inside `knexfile.js`.
-- Fix the scripts inside `package.json` to use your Heroku app.
+what you get back:
+{
+    "message": "marco is back!",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoxMCwidXNlcm5hbWUiOiJtYXJjbyIsInJvbGUiOiJvd25lciIsImlhdCI6MTYxOTM2ODY1OCwiZXhwIjoxNjE5NDU1MDU4fQ.Hl9vOkOOhNPTcuckYaoj1b8KCMUvCHXGgMPFK4Vd2XA",
+    "role": "owner"
+}
+```
+</details>
 
-## Scripts
+-----------------------------------------------------------------------------------------
 
-- **start**: Runs the app.
-- **server**: Runs the app with Nodemon.
-- **migrate**: Migrates the local development database to the latest.
-- **rollback**: Rolls back migrations in the local development database.
-- **seed**: Truncates all tables in the local development database, feel free to add more seed files.
-- **test**: Runs tests.
-- **deploy**: Deploys the main branch to Heroku.
+### DELETE - Logout User
+<details>
+<summary>https://foodtruckbuildweek.herokuapp.com/api/auth/logout</summary>
 
-**The following scripts NEED TO BE EDITED before using: replace `YOUR_HEROKU_APP_NAME_HERE`**
+```JSON
+Status: 200 OK
+```
+</details>
 
-- **migrateh**: Migrates the Heroku database to the latest.
-- **rollbackh**: Rolls back migrations in the Heroku database.
-- **databaseh**: Interact with the Heroku database from the command line using psql.
-- **seedh**: Runs all seeds in the Heroku database.
+-----------------------------------------------------------------------------------------
 
-## Hot Tips
+### GET - Get Diner by id
+<details>
+<summary>https://foodtruckbuildweek.herokuapp.com/api/diners/{diner_id}</summary>
 
-- Figure out the connection to the database and deployment before writing any code.
+```JSON
+what you get back:
+{
+    "diner_id": 2,
+    "longitude": "01.44888",
+    "latitude": "90.12322",
+    "diner_favetruck_id": 2
+}
+    
+    
+```
+</details>
 
-- If you need to make changes to a migration file that has already been released to Heroku, follow this sequence:
+-----------------------------------------------------------------------------------------
 
-  1. Roll back migrations in the Heroku database
-  2. Deploy the latest code to Heroku
-  3. Migrate the Heroku database to the latest
+### GET - Get Diner favorite truck by id
+<details>
+<summary>https://foodtruckbuildweek.herokuapp.com/api/diners/{diner_id}/trucks</summary>
 
-- If your frontend devs are clear on the shape of the data they need, you can quickly build provisional endpoints that return mock data. They shouldn't have to wait for you to build the entire backend.
+```JSON
+what you get back:
+[
+    {
+        "truck_id": 1,
+        "truck_img": "arturo-rey-m6fYkq_P2Cc-unsplash.jpg",
+        "cuisine_type": "french",
+        "departure_time": "19:00:00",
+        "longitude": "44.88888",
+        "latitude": "22.12121",
+        "diner_favetruck_id": 3,
+        "diner_id": 1
+    }
+]
+```
+</details>
 
-- Keep your endpoints super lean: the bulk of the code belongs inside models and other middlewares.
+-----------------------------------------------------------------------------------------
 
-- Validating and sanitizing client data using a library is much less work than doing it manually.
+### GET - Get ALL trucks
+<details>
+<summary>https://foodtruckbuildweek.herokuapp.com/api/trucks</summary>
 
-- Revealing crash messages to clients is a security risk, but during development it's helpful if your frontend devs are able to tell you what crashed.
+```JSON
+what you get back:
+[
+    {
+        "truck_id": 1,
+        "truck_img": "arturo-rey-m6fYkq_P2Cc-unsplash.jpg",
+        "cuisine_type": "french",
+        "departure_time": "19:00:00",
+        "longitude": "99.00333",
+        "latitude": "44.77777"
+    },
+    {
+        "truck_id": 2,
+        "truck_img": "s-o-c-i-a-l-c-u-t--eeAvufLf9A-unsplash.jpg",
+        "cuisine_type": "vietnamese",
+        "departure_time": "17:00:00",
+        "longitude": "91.00998",
+        "latitude": "14.75577"
+    },
+    {
+        "truck_id": 3,
+        "truck_img": "harry-gillen-b2gdRynjL9Q-unsplash.jpg",
+        "cuisine_type": "mexican",
+        "departure_time": "21:00:00",
+        "longitude": "90.00322",
+        "latitude": "77.76654"
+    }
+]
+```
+</details>
 
-- PostgreSQL comes with [fantastic built-in functions](https://hashrocket.com/blog/posts/faster-json-generation-with-postgresql) for hammering rows into whatever JSON shape.
+-----------------------------------------------------------------------------------------
 
-- If you want to edit a migration that has already been released but don't want to lose all the data, make a new migration instead. This is a more realistic flow for production apps: prod databases are never migrated down. We can migrate Heroku down freely only because there's no valuable data from customers in it. In this sense, Heroku is acting more like a staging environment than production.
+### GET - Get truck by id
+<details>
+<summary>https://foodtruckbuildweek.herokuapp.com/api/trucks/{truck_id}</summary>
 
-- If your fronted devs are interested in running the API locally, help them set up PostgreSQL & pgAdmin in their machines, and teach them how to run migrations in their local. This empowers them to (1) help you troubleshoot bugs, (2) obtain the latest code by simply doing `git pull` and (3) work with their own data, without it being wiped every time you roll back the Heroku db. Collaboration is more fun and direct, and you don't need to deploy as often.
+```JSON
+what you get back:
+{
+    "truck_id": 1,
+    "truck_img": "arturo-rey-m6fYkq_P2Cc-unsplash.jpg",
+    "cuisine_type": "french",
+    "departure_time": "19:00:00",
+    "longitude": "99.00333",
+    "latitude": "44.77777"
+}
+```
+</details>
+
+-----------------------------------------------------------------------------------------
+
+
+### POST - Create new truck
+<details>
+<summary>https://foodtruckbuildweek.herokuapp.com/api/trucks</summary>
+
+```JSON
+what you need: 
+{
+    "truck_img": "eugene-chystiakov-nlHdn7AhJHY-unsplash.jpg",
+    "cuisine_type": "american",
+    "departure_time": "11:00pm",
+    "longitude": "12.12121",
+    "latitude": "13.13133"
+}
+
+what you get back: 
+
+{
+    "truck_id": 4,
+    "truck_img": "eugene-chystiakov-nlHdn7AhJHY-unsplash.jpg",
+    "cuisine_type": "american",
+    "departure_time": "23:00:00",
+    "longitude": "12.12121",
+    "latitude": "13.13133"
+}
+```
+</details>
+
+-----------------------------------------------------------------------------------------
+
+### PUT - Update Truck
+<details>
+<summary>https://foodtruckbuildweek.herokuapp.com/api/trucks/{truck_id}</summary>
+
+```JSON
+What you need: 
+{
+    "truck_id": 2, 
+    "truck_img": "eugene-chystiakov-nlHdn7AhJHY-unsplash.jpg",
+    "cuisine_type": "eithopian",
+    "departure_time": "11:11pm",
+    "longitude": "15.12121",
+    "latitude": "13.13443"
+}
+
+What you get is:
+Status: 200 Ok
+```
+</details>
+
+-----------------------------------------------------------------------------------------
+
+### DELETE - Delete truck
+<details>
+<summary>https://foodtruckbuildweek.herokuapp.com/api/trucks/{truck_id}</summary>
+
+```JSON
+{
+    "message": "truck deleted"
+}
+```
+</details>
+
+
+-----------------------------------------------------------------------------------------
+
+### GET - Get operator by id
+<details>
+<summary>https://foodtruckbuildweek.herokuapp.com/api/operators/{operator_id}</summary>
+
+```JSON
+what you get back:
+{
+    "operator_id": 2,
+    "truck_id": 3
+}
+```
+</details>
+
+-----------------------------------------------------------------------------------------
+
+### GET - Get trucks based on operator's id
+<details>
+<summary>https://foodtruckbuildweek.herokuapp.com/api/operators/{operator_id}/trucks</summary>
+
+```JSON
+what you get back:
+[
+    {
+        "truck_id": 1,
+        "truck_img": "arturo-rey-m6fYkq_P2Cc-unsplash.jpg",
+        "cuisine_type": "french",
+        "departure_time": "19:00:00",
+        "longitude": "99.00333",
+        "latitude": "44.77777",
+        "operator_id": 1
+    }
+]
+```
+</details>
