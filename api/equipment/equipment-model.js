@@ -1,5 +1,4 @@
 const db = require("../data/db-config");
-const Requests = require("../requests/requests-model");
 
 async function find() {
   const equipmentList = await db("equipment as e")

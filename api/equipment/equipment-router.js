@@ -75,6 +75,4 @@ router.delete("/:equipment_id", checkRoleOwner, async (req, res, next) => {
   }
 });
 
-router.put("/:equipment_id");
-
 module.exports = router;
