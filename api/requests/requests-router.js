@@ -1,11 +1,15 @@
 const express = require("express");
-const { checkRoleRenter, checkRoleOwner } = require("../middleware/middleware");
+const {
+  checkRoleRenter,
+  checkRoleOwner,
+  restricted,
+} = require("../middleware/middleware");
 const Equipment = require("../equipment/equipment-model");
 const Requests = require("../requests/requests-model");
 
 const router = express.Router();
 
-router.get("/", checkRoleOwner, async (req, res, next) => {
+router.get("/", restricted, checkRoleOwner, async (req, res, next) => {
   try {
     const user_id = req.decodedToken.subject;
     const requests = await Requests.findByOwnerId(user_id);
@@ -15,7 +19,7 @@ router.get("/", checkRoleOwner, async (req, res, next) => {
   }
 });
 
-router.post("/", checkRoleRenter, async (req, res, next) => {
+router.post("/", restricted, checkRoleRenter, async (req, res, next) => {
   try {
     const equipment_id = req.body.equipment_id;
     const user_id = req.decodedToken.subject;
@@ -27,7 +31,7 @@ router.post("/", checkRoleRenter, async (req, res, next) => {
   }
 });
 
-router.delete("/:request_id", async (req, res, next) => {
+router.delete("/:request_id", restricted, async (req, res, next) => {
   try {
     const { request_id } = req.params;
     const request = await Requests.findById(request_id);
