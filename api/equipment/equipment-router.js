@@ -16,12 +16,11 @@ router.get("/", async (req, res, next) => {
 router.post("/", restricted, async (req, res, next) => {
   try {
     const user_id = req.decodedToken.subject;
-    const { name, imgUrl, description, availableForRent } = req.body;
+    const { name, imgUrl, description } = req.body;
     let equipment = {
       equipment_name: name,
       equipment_img: imgUrl,
       equipment_description: description,
-      equipment_available: availableForRent,
       user_id: user_id,
     };
     const added = await Equipment.add(equipment);
@@ -39,14 +38,13 @@ router.put(
     try {
       const user_id = req.decodedToken.subject;
       const { equipment_id } = req.params;
-      const { name, imgUrl, description, availableForRent } = req.body;
+      const { name, imgUrl, description } = req.body;
       const existing = await Equipment.findById(equipment_id);
       if (existing && user_id === existing.user_id) {
         const equipment = {
           equipment_name: name,
           equipment_img: imgUrl,
           equipment_description: description,
-          equipment_available: availableForRent,
           user_id: user_id,
         };
         const updated = await Equipment.updateById(equipment_id, equipment);
