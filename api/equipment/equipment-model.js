@@ -1,4 +1,3 @@
-const { request } = require("express");
 const db = require("../data/db-config");
 
 async function find() {
@@ -10,7 +9,8 @@ async function find() {
       "e.equipment_id",
       "e.equipment_name",
       "e.equipment_img",
-      "e.equipment_description"
+      "e.equipment_description",
+      "e.equipment_available"
     );
 
   const result = equipmentList.map((equipment) => {
@@ -29,7 +29,17 @@ async function find() {
 
 async function findById(equipment_id) {
   const equipment = await db("equipment")
-    .where("equipment_id", equipment_id)
+    .join("users as u", "e.user_id", "=", "u.user_id")
+    .select(
+      "u.user_id",
+      "u.username",
+      "e.equipment_id",
+      "e.equipment_name",
+      "e.equipment_img",
+      "e.equipment_description",
+      "e.equipment_available"
+    )
+    .where("e.equipment_id", equipment_id)
     .first();
 
   return {
@@ -89,9 +99,32 @@ async function findOwned(owner_id) {
 }
 
 async function findRented(renter_id) {
-  return db("equipment as e")
+  const equipmentList = await db("equipment as e")
     .join("requests as r", "e.equipment_id", "=", "r.equipment_id")
+    .join("users as u", "e.user_id", "=", "u.user_id")
+    .select(
+      "u.user_id",
+      "u.username",
+      "e.equipment_id",
+      "e.equipment_name",
+      "e.equipment_img",
+      "e.equipment_description",
+      "e.equipment_available"
+    )
     .where("r.user_id", renter_id);
+
+  const result = equipmentList.map((equipment) => {
+    return {
+      owner: { id: equipment.user_id, username: equipment.username },
+      id: equipment.equipment_id,
+      name: equipment.equipment_name,
+      imgUrl: equipment.equipment_img,
+      description: equipment.equipment_description,
+      isAvailable: equipment.equipment_available,
+    };
+  });
+
+  return result;
 }
 
 async function add(equipment) {
