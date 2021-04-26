@@ -7,7 +7,7 @@ function find() {
 function findBy(filter) {
   return db("users")
     .select("user_id", "password", "username", "role")
-    .where(filter);
+    .whereRaw(`LOWER(username) LIKE ?`, [`%${filter.username}%`]);
 }
 
 function findById(user_id) {
