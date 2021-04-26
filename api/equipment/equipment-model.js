@@ -1,3 +1,4 @@
+const { request } = require("express");
 const db = require("../data/db-config");
 
 async function find() {
@@ -42,7 +43,49 @@ async function findById(equipment_id) {
 }
 
 async function findOwned(owner_id) {
-  return db("equipment").where("user_id", owner_id);
+  const storage = {};
+  const result = [];
+
+  const table = await db("equipment as e")
+    .join("requests as r", "r.equipment_id", "e.equipment_id")
+    .select(
+      "e.equipment_id",
+      "e.equipment_name",
+      "e.equipment_description",
+      "e.equipment_img",
+      "e.equipment_available",
+      "r.user_id",
+      "r.request_id",
+      "r.accepted"
+    )
+    .where("e.user_id", owner_id);
+
+  table.forEach((row) => {
+    const kv = storage[request.equipment_id];
+    const request = {
+      request_id: row.request_id,
+      equipment_id: row.equipment_id,
+      renter_id: row.renter_id,
+      accepted: row.accepted,
+    };
+    if (!kv) {
+      storage[row.equipment_id] = {
+        name: row.equipment_name,
+        description: row.equipment_description,
+        imgUrl: row.equipment_img,
+        isAvailable: row.equipment_available,
+        requests: [request],
+      };
+    } else {
+      storage[row.equipment_id].requests.push(request);
+    }
+  });
+
+  for (const [key, value] of Object.entries(storage)) {
+    result.push({ id: key, ...value });
+  }
+
+  return result;
 }
 
 async function findRented(renter_id) {
