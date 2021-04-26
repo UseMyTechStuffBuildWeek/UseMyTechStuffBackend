@@ -16,6 +16,22 @@ const checkUsernameExists = async (req, res, next) => {
     }
   }
 
+  // const changeToUppercase =  async (req, res, next) => {
+  //   try{
+  //     const [user] = await findBy({username: req.body.username})
+     
+  //       if(!user === ""){
+  //         next({status: 401, 
+  //           message: "Invalid credentials"})
+  //       } else{
+  //         req.user = user.map(name => name.toUpperCase())
+  //     }
+  //   } catch(err){
+  //     next(err)
+  //   }
+   
+    
+  // }
 
 const checkRegistration = (req, res, next) => {
     if (!req.body.username || !req.body.password || !req.body.role){

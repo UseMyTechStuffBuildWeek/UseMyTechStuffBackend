@@ -70,7 +70,7 @@ router.delete(
     } catch (err) {
       next(err);
     }
-  }
+  },
 );
 
 module.exports = router;

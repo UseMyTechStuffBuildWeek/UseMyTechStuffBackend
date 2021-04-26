@@ -13,6 +13,7 @@ router.post(
   "/register",
   validateRoleName,
   checkRegistration,
+
   (req, res, next) => {
     const { username, role, password } = req.body;
     const hash = bcrypt.hashSync(password, 8);
@@ -25,7 +26,7 @@ router.post(
   }
 );
 
-router.post("/login", checkUsernameExists, (req, res) => {
+router.post("/login", checkUsernameExists,(req, res) => {
   const { username, password } = req.body;
 
   if (req.body) {
