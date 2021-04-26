@@ -133,6 +133,35 @@ what you get back:
 ### GET - Get Owned Equipment
 <details>
 <summary>https://use-my-tech-app.herokuapp.com/api/users/owner</summary>
+
+```JSON
+Returns Owned Equipment
+
+what you get back:
+[
+    {
+        "equipment_id": 1,
+        "equipment_name": "camera",
+        "equipment_description": "like new",
+        "equipment_img": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+        "equipment_available": true
+    },
+    {
+        "equipment_id": 2,
+        "equipment_name": "video camera",
+        "equipment_description": "excellent audio and image",
+        "equipment_img": "https://images.unsplash.com/photo-1589872307379-0ffdf9829123?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1051&q=80",
+        "equipment_available": false
+    },
+    {
+        "equipment_id": 3,
+        "equipment_name": "podcast microphone",
+        "equipment_description": "best audio out there",
+        "equipment_img": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
+        "equipment_available": false
+    }
+]
+```
 </details>
 
 -----------------------------------------------------------------------------------------
@@ -140,6 +169,36 @@ what you get back:
 ### GET - Get Rented Equipment
 <details>
 <summary>https://use-my-tech-app.herokuapp.com/api/users/renter</summary>
+
+```JSON
+Returns Rented Equipment
+
+what you get back:
+[
+    {
+        "owner": {
+            "id": 2,
+            "username": "Mario"
+        },
+        "id": 3,
+        "name": "podcast microphone",
+        "imgUrl": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
+        "description": "best audio out there",
+        "isAvailable": false
+    },
+    {
+        "owner": {
+            "id": 2,
+            "username": "Mario"
+        },
+        "id": 2,
+        "name": "video camera",
+        "imgUrl": "https://images.unsplash.com/photo-1589872307379-0ffdf9829123?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1051&q=80",
+        "description": "excellent audio and image",
+        "isAvailable": false
+    }
+]
+```
 </details>
 
 -----------------------------------------------------------------------------------------
@@ -161,11 +220,12 @@ what you need:
 what you get back:
 {
     "owner": {
-        "id": 2
+        "id": 2,
+        "username": "Mario"
     },
-    "id": 9,
+    "id": 4,
     "name": "mining rig",
-    "imgUrl": "https://cdn.mos.cms.futurecdn.net/pLmxqBBToop8EyqSyTzExn-970-80.jpg.webp",
+    "imgUrl": "insert-image-url-here",
     "description": "generates money",
     "isAvailable": true
 }
@@ -177,6 +237,30 @@ what you get back:
 ### PUT - Update Equipment By ID
 <details>
 <summary>https://use-my-tech-app.herokuapp.com/api/equipment/:equipment_id</summary>
+    
+```JSON
+Updates existing owned equipment.
+
+what you need (optional):
+{
+    "name": "mining rig",
+    "description": "generates money",
+    "imgUrl": "https://cdn.mos.cms.futurecdn.net/pLmxqBBToop8EyqSyTzExn-970-80.jpg.webp"
+}
+
+what you get back:
+{
+    "owner": {
+        "id": 2,
+        "username": "Mario"
+    },
+    "id": 4,
+    "name": "mining rig",
+    "imgUrl": "insert-image-url-here",
+    "description": "generates money",
+    "isAvailable": true
+}
+```
 </details>
 
 -----------------------------------------------------------------------------------------
@@ -184,6 +268,23 @@ what you get back:
 ### DELETE - Remove Equipment By ID
 <details>
 <summary>https://use-my-tech-app.herokuapp.com/api/equipment/:equipment_id</summary>
+    
+```JSON
+Deletes owned equipment with specific id.
+
+what you get back:
+{
+    "owner": {
+        "id": 2,
+        "username": "Mario"
+    },
+    "id": 4,
+    "name": "mining rig",
+    "imgUrl": "insert-image-url-here",
+    "description": "generates money",
+    "isAvailable": true
+}
+```
 </details>
 
 -----------------------------------------------------------------------------------------
@@ -191,6 +292,23 @@ what you get back:
 ### POST - Create A Rental Request
 <details>
 <summary>https://use-my-tech-app.herokuapp.com/api/requests</summary>
+    
+```JSON
+Creates a request to rent equipment.
+
+what you need:
+{
+    "equipment_id": 2
+}
+
+what you get back:
+{
+    "request_id": 4,
+    "user_id": 1,
+    "equipment_id": 2,
+    "accepted": false
+}
+```
 </details>
 
 -----------------------------------------------------------------------------------------
@@ -198,13 +316,39 @@ what you get back:
 ### PUT - Accept Rental Request By ID
 <details>
 <summary>https://use-my-tech-app.herokuapp.com/api/requests/:request_id</summary>
+    
+```JSON
+Accepts request to rent equipment. Makes equipment unavailable until
+rental is terminated.
+
+what you get back:
+{
+    "request_id": 4,
+    "user_id": 1,
+    "equipment_id": 2,
+    "accepted": false
+}
+```
 </details>
 
 -----------------------------------------------------------------------------------------
 
-### DELETE - Delete Rental Request By ID
+### DELETE - Terminate Rental Request By ID
 <details>
 <summary>https://use-my-tech-app.herokuapp.com/api/requests/:request_id</summary>
+
+```JSON
+Accepts request to rent equipment. Makes equipment unavailable until
+rental is terminated. Only owner of equipment can make this call.
+
+what you get back:
+{
+    "request_id": 4,
+    "user_id": 1,
+    "equipment_id": 2,
+    "accepted": false
+}
+```
 </details>
 
 -----------------------------------------------------------------------------------------
