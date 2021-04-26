@@ -9,8 +9,7 @@ async function find() {
       "e.equipment_id",
       "e.equipment_name",
       "e.equipment_img",
-      "e.equipment_description",
-      "e.equipment_available"
+      "e.equipment_description"
     );
 
   const result = equipmentList.map((equipment) => {

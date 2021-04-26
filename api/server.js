@@ -5,10 +5,15 @@ const cors = require("cors");
 const session = require("express-session");
 const KnexSessionStore = require("connect-session-knex")(session);
 
+<<<<<<< HEAD
 const authRouter = require("./auth/auth-router.js");
 const usersRouter = require("./users/users-router");
+=======
+const authRouter = require("./auth/auth-router");
+>>>>>>> 09db3a675b53201b0e1c13426a8a3b7cedc4c016
 const equipmentRouter = require("./equipment/equipment-router");
 const requestsRouter = require("./requests/requests-router");
+const rentedRouter = require("./rented/rented-router");
 
 const server = express();
 
@@ -20,6 +25,7 @@ server.use("/api/auth", authRouter);
 server.use("/api/users", usersRouter);
 server.use("/api/equipment", equipmentRouter);
 server.use("/api/requests", requestsRouter);
+server.use("/api/rented", rentedRouter)
 
 const sessionOptions = {
   name: "monkey",
