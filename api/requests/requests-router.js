@@ -5,6 +5,7 @@ const {
   restricted,
 } = require("../middleware/middleware");
 const Requests = require("../requests/requests-model");
+const Equipment = require("../equipment/equipment-model");
 const { validateOwnership } = require("./requests-middleware");
 
 const router = express.Router();
@@ -43,9 +44,9 @@ router.put(
   async (req, res, next) => {
     try {
       const { request_id } = req.params;
-      const { equipment_id } = Requests.findById(request_id);
-      const acceptedRequests = Requests.findRenterByEquipmentId(equipment_id);
-      if (!acceptedRequests.length > 0) {
+      const { equipment_id } = await Requests.findById(request_id);
+      const equipment = await Equipment.findById(equipment_id);
+      if (equipment.isAvailable) {
         const updated = await Requests.accept(request_id);
         res.status(200).json(updated);
       } else {

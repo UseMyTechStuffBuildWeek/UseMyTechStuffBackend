@@ -28,9 +28,9 @@ router.post("/", restricted, checkRoleOwner, async (req, res, next) => {
     const user_id = req.decodedToken.subject;
     const { name, imgUrl, description } = req.body;
     const equipment = {
+      equipment_name: name,
       equipment_description: description,
       equipment_img: imgUrl,
-      equipment_name: name,
       user_id: user_id,
     };
     const added = await Equipment.add(equipment);
@@ -50,7 +50,7 @@ router.put(
       const { equipment_id } = req.params;
       const { name, imgUrl, description } = req.body;
       const existing = await Equipment.findById(equipment_id);
-      if (existing && user_id === existing.owner_id) {
+      if (existing && user_id === existing.owner.id) {
         const equipment = {
           equipment_name: name,
           equipment_img: imgUrl,
@@ -78,7 +78,7 @@ router.delete(
       const user_id = req.decodedToken.subject;
       const { equipment_id } = req.params;
       let equipment = await Equipment.findById(equipment_id);
-      if (equipment && user_id === equipment.owner_id) {
+      if (equipment && user_id === equipment.owner.id) {
         equipment = await Equipment.deleteById(equipment_id);
         res.status(200).json(equipment);
       } else if (!equipment) {
