@@ -64,7 +64,7 @@ Status: 200 OK
 <summary>https://use-my-tech-app.herokuapp.com/api/equipment</summary>
     
 ```JSON
-Returns ALL equipment.
+Returns ALL equipment. Anyone can make this call.
 
 what you get back:
 [
@@ -112,7 +112,7 @@ what you get back:
 <summary>https://use-my-tech-app.herokuapp.com/api/equipment/:equipment_id</summary>
     
 ```JSON
-Returns equipment with specific id.
+Returns equipment with specific id. Anyone can make this call.
 
 what you get back:
 {
@@ -135,7 +135,7 @@ what you get back:
 <summary>https://use-my-tech-app.herokuapp.com/api/users/owner</summary>
 
 ```JSON
-Returns Owned Equipment
+Returns owned equipment. Only owners can make this call.
 
 what you get back:
 [
@@ -171,7 +171,7 @@ what you get back:
 <summary>https://use-my-tech-app.herokuapp.com/api/users/renter</summary>
 
 ```JSON
-Returns Rented Equipment
+Returns rented equipment. Only renters can make this call.
 
 what you get back:
 [
@@ -208,7 +208,7 @@ what you get back:
 <summary>https://use-my-tech-app.herokuapp.com/api/equipment</summary>
     
 ```JSON
-Adds equipment to database.
+Adds equipment to database. Only owners can make this call.
 
 what you need:
 {
@@ -239,7 +239,7 @@ what you get back:
 <summary>https://use-my-tech-app.herokuapp.com/api/equipment/:equipment_id</summary>
     
 ```JSON
-Updates existing owned equipment.
+Updates existing owned equipment. Only owner of equipment can make this call.
 
 what you need (optional):
 {
@@ -270,7 +270,7 @@ what you get back:
 <summary>https://use-my-tech-app.herokuapp.com/api/equipment/:equipment_id</summary>
     
 ```JSON
-Deletes owned equipment with specific id.
+Deletes equipment with specific id. Only owner of equipment can make this call.
 
 what you get back:
 {
@@ -294,7 +294,7 @@ what you get back:
 <summary>https://use-my-tech-app.herokuapp.com/api/requests</summary>
     
 ```JSON
-Creates a request to rent equipment.
+Creates a request to rent equipment. Only renters can make this call.
 
 what you need:
 {
@@ -319,7 +319,7 @@ what you get back:
     
 ```JSON
 Accepts request to rent equipment. Makes equipment unavailable until
-rental is terminated.
+rental is terminated. Only owner of equipment can make this call.
 
 what you get back:
 {
