@@ -1,1 +1,0 @@
-const db = require("../api/data/db-config")
