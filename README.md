@@ -133,24 +133,6 @@ what you get back:
 ### GET - Get Owned Equipment
 <details>
 <summary>https://use-my-tech-app.herokuapp.com/api/users/owner</summary>
-    
-```JSON
-Returns equipment the user owns.
-
-what you get back:
-[
-    {
-        "equipment_id": 1,
-        "equipment_name": "camera",
-        "equipment_description": "like new",
-        "equipment_img": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
-        "equipment_available": true,
-        "user_id": 1,
-        "request_id": 1,
-        "accepted": false
-    }
-]
-```
 </details>
 
 -----------------------------------------------------------------------------------------
