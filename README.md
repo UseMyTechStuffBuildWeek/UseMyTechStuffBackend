@@ -206,13 +206,6 @@ what you get back:
 
 -----------------------------------------------------------------------------------------
 
-### GET - Get Requests To Rent Owned Equipment
-<details>
-<summary>https://use-my-tech-app.herokuapp.com/api/requests</summary>
-</details>
-
------------------------------------------------------------------------------------------
-
 ### POST - Create A Request To Rent
 <details>
 <summary>https://use-my-tech-app.herokuapp.com/api/requests</summary>
