@@ -87,7 +87,7 @@ Status: 200 OK
 
 -----------------------------------------------------------------------------------------
 
-### GET - Get Rental Requests
+### GET - Get Rental Requests For Owner
 <details>
 <summary>https://use-my-tech-app.herokuapp.com/api/requests</summary>
 </details>
