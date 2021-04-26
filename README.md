@@ -132,7 +132,7 @@ what you get back:
 
 ### GET - Get Owned Equipment
 <details>
-<summary>https://use-my-tech-app.herokuapp.com/api/users/renter</summary>
+<summary>https://use-my-tech-app.herokuapp.com/api/users/owner</summary>
     
 ```JSON
 Returns equipment the user owns.
@@ -206,7 +206,7 @@ what you get back:
 
 -----------------------------------------------------------------------------------------
 
-### GET - Get Rental Requests For Owner
+### GET - Get Requests To Rent Owned Equipment
 <details>
 <summary>https://use-my-tech-app.herokuapp.com/api/requests</summary>
 </details>
