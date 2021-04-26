@@ -26,11 +26,11 @@ router.post(
   }
 );
 
-router.post("/login", checkUsernameExists,(req, res) => {
-  const { username, password } = req.body;
+router.post("/login", checkUsernameExists, (req, res) => {
+  const { password, username } = req.body;
 
   if (req.body) {
-    User.findBy({ username: username })
+    User.findBy({ username: username.toLowerCase() })
       .then(([user]) => {
         if (user && bcrypt.compareSync(password, user.password)) {
           const token = buildToken(user);
