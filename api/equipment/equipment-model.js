@@ -53,7 +53,15 @@ async function findById(equipment_id) {
 }
 
 async function findOwned(owner_id) {
-  return db("equipment as e").where("e.user_id", owner_id);
+  return db("equipment as e")
+    .select(
+      "equipment_id",
+      "equipment_name",
+      "equipment_description",
+      "equipment_img",
+      "equipment_available"
+    )
+    .where("e.user_id", owner_id);
 }
 
 async function findRented(renter_id) {
