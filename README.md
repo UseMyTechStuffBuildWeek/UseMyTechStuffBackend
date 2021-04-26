@@ -188,7 +188,7 @@ what you get back:
 
 -----------------------------------------------------------------------------------------
 
-### POST - Create A Request To Rent
+### POST - Create A Rental Request
 <details>
 <summary>https://use-my-tech-app.herokuapp.com/api/requests</summary>
 </details>
