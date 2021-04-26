@@ -11,7 +11,6 @@ exports.up = async (knex) => {
       tbl.increments("equipment_id");
       tbl.string("equipment_name", 200).notNullable();
       tbl.string("equipment_description", 320).notNullable();
-      tbl.boolean("equipment_available").notNullable();
       tbl.string("equipment_img").notNullable();
       tbl
         .integer("user_id")
@@ -23,6 +22,13 @@ exports.up = async (knex) => {
     })
     .createTable("items_rented", (tbl) => {
       tbl.increments("items_rented_id");
+      tbl
+        .integer("equipment_id")
+        .unsigned()
+        .references("equipment_id")
+        .inTable("equipment")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE");
       tbl
         .integer("user_id")
         .unsigned()

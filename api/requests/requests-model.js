@@ -7,7 +7,7 @@ function findById(request_id) {
 function findByOwnerId(owner_id) {
   return db("requests as r")
     .join("equipment as e", "e.equipment_id", "=", "r.equipment_id")
-    .select("r.user_id as renter_id", "e.user_id as owner_id", "e.equipment_id")
+    .select("r.user_id as renter_id", "e.owner_id", "e.equipment_id")
     .where("e.user_id", owner_id);
 }
 

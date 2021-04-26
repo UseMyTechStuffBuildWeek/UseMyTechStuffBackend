@@ -40,7 +40,7 @@ router.delete("/:request_id", restricted, async (req, res, next) => {
       res.status(404).json(`request with id ${request_id} doesn't exist`);
     } else {
       const equipment = await Equipment.findById(equipment_id);
-      const owner_id = equipment.user_id;
+      const owner_id = equipment.owner_id;
       const renter_id = request.user_id;
       const user_id = req.decodedToken.subject;
       if (owner_id === user_id || renter_id === user_id) {

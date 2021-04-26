@@ -4,13 +4,13 @@ async function find() {
   const equipmentList = await db("equipment as e")
     .join("users as u", "e.user_id", "=", "u.user_id")
     .select(
-      "u.user_id",
+      "u.owner_id",
       "u.username",
       "e.equipment_id",
       "e.equipment_name",
       "e.equipment_img",
       "e.equipment_description",
-      "e.equipment_available"
+      "e.renter_id"
     );
 
   const result = equipmentList.map((equipment) => {
@@ -21,7 +21,6 @@ async function find() {
       name: equipment.equipment_name,
       imgUrl: equipment.equipment_img,
       description: equipment.equipment_description,
-      availableForRent: equipment.equipment_available,
     };
   });
   return result;
