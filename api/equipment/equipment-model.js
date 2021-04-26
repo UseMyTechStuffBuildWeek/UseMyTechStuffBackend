@@ -14,21 +14,42 @@ async function find() {
     );
 
   const result = equipmentList.map((equipment) => {
-    const { equipment_id } = equipment;
     return {
       owner: { id: equipment.user_id, username: equipment.username },
-      id: equipment_id,
+      id: equipment.equipment_id,
       name: equipment.equipment_name,
       imgUrl: equipment.equipment_img,
       description: equipment.equipment_description,
-      availableForRent: equipment.equipment_available,
+      isAvailable: equipment.equipment_available,
     };
   });
+
   return result;
 }
 
-function findById(equipment_id) {
-  return db("equipment").where("equipment_id", equipment_id).first();
+async function findById(equipment_id) {
+  const equipment = await db("equipment")
+    .where("equipment_id", equipment_id)
+    .first();
+
+  return {
+    owner: { id: equipment.user_id, username: equipment.username },
+    id: equipment.equipment_id,
+    name: equipment.equipment_name,
+    imgUrl: equipment.equipment_img,
+    description: equipment.equipment_description,
+    isAvailable: equipment.equipment_available,
+  };
+}
+
+async function findOwned(owner_id) {
+  return db("equipment").where("user_id", owner_id);
+}
+
+async function findRented(renter_id) {
+  return db("equipment as e")
+    .join("requests as r", "e.equipment_id", "=", "r.equipment_id")
+    .where("r.user_id", renter_id);
 }
 
 async function add(equipment) {
@@ -50,4 +71,12 @@ async function updateById(equipment_id, changes) {
   return findById(equipment_id);
 }
 
-module.exports = { find, findById, add, deleteById, updateById };
+module.exports = {
+  find,
+  findById,
+  findRented,
+  findOwned,
+  add,
+  deleteById,
+  updateById,
+};

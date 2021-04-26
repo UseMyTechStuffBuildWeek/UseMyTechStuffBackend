@@ -13,15 +13,24 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/", restricted, async (req, res, next) => {
+router.get("/:equipment_id", async (req, res, next) => {
+  try {
+    const { equipment_id } = req.params;
+    const equipment = await Equipment.findById(equipment_id);
+    res.status(200).json(equipment);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post("/", restricted, checkRoleOwner, async (req, res, next) => {
   try {
     const user_id = req.decodedToken.subject;
-    const { name, imgUrl, description, availableForRent } = req.body;
-    let equipment = {
-      equipment_name: name,
-      equipment_img: imgUrl,
+    const { name, imgUrl, description } = req.body;
+    const equipment = {
       equipment_description: description,
-      equipment_available: availableForRent,
+      equipment_img: imgUrl,
+      equipment_name: name,
       user_id: user_id,
     };
     const added = await Equipment.add(equipment);
@@ -39,15 +48,13 @@ router.put(
     try {
       const user_id = req.decodedToken.subject;
       const { equipment_id } = req.params;
-      const { name, imgUrl, description, availableForRent } = req.body;
+      const { name, imgUrl, description } = req.body;
       const existing = await Equipment.findById(equipment_id);
-      if (existing && user_id === existing.user_id) {
+      if (existing && user_id === existing.owner_id) {
         const equipment = {
           equipment_name: name,
           equipment_img: imgUrl,
           equipment_description: description,
-          equipment_available: availableForRent,
-          user_id: user_id,
         };
         const updated = await Equipment.updateById(equipment_id, equipment);
         res.status(200).json(updated);
@@ -71,7 +78,7 @@ router.delete(
       const user_id = req.decodedToken.subject;
       const { equipment_id } = req.params;
       let equipment = await Equipment.findById(equipment_id);
-      if (equipment && user_id === equipment.user_id) {
+      if (equipment && user_id === equipment.owner_id) {
         equipment = await Equipment.deleteById(equipment_id);
         res.status(200).json(equipment);
       } else if (!equipment) {

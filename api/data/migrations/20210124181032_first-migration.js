@@ -11,18 +11,8 @@ exports.up = async (knex) => {
       tbl.increments("equipment_id");
       tbl.string("equipment_name", 200).notNullable();
       tbl.string("equipment_description", 320).notNullable();
-      tbl.boolean("equipment_available").notNullable();
       tbl.string("equipment_img").notNullable();
-      tbl
-        .integer("user_id")
-        .unsigned()
-        .references("user_id")
-        .inTable("users")
-        .onDelete("CASCADE")
-        .onUpdate("CASCADE");
-    })
-    .createTable("items_rented", (tbl) => {
-      tbl.increments("items_rented_id");
+      tbl.boolean("equipment_available").notNullable().defaultTo(true);
       tbl
         .integer("user_id")
         .unsigned()
@@ -47,12 +37,12 @@ exports.up = async (knex) => {
         .inTable("equipment")
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
+      tbl.boolean("accepted").notNullable().defaultTo(false);
     });
 };
 
 exports.down = async (knex) => {
   await knex.schema.dropTableIfExists("requests");
-  await knex.schema.dropTableIfExists("items_rented");
   await knex.schema.dropTableIfExists("equipment");
   await knex.schema.dropTableIfExists("users");
 };
