@@ -5,14 +5,14 @@ const { JWT_SECRET } = require("../secrets/index.js");
 const jwt = require("jsonwebtoken");
 const {
   validateRoleName,
-  checkRegistration,
+  checkIfString,
   checkUsernameExists,
 } = require("./auth-middleware.js");
 
 router.post(
   "/register",
   validateRoleName,
-  checkRegistration,
+  checkIfString,
 
   (req, res, next) => {
     const { username, role, password } = req.body;
@@ -26,7 +26,7 @@ router.post(
   }
 );
 
-router.post("/login", checkUsernameExists, (req, res) => {
+router.post("/login", checkUsernameExists,  (req, res) => {
   const { password, username } = req.body;
 
   if (req.body) {
