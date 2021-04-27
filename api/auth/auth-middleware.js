@@ -16,23 +16,16 @@ const checkUsernameExists = async (req, res, next) => {
     }
   }
 
-  // const checkString =  async (req, res, next) => {
-  //   try{
-  //     const [user] = await findBy({username: req.body.username})
-     
-  //       if(!user === ""){
-  //         next({status: 401, 
-  //           message: "Invalid credentials"})
-  //       } else{
-  //         req.user = user.map(name => name.toUpperCase())
-  //     }
-  //   } catch(err){
-  //     next(err)
-  //   }
-  // }
+  const checkIfString = (req, res, next) => {
+    if(typeof req.body.username === "string"){
+      next()
+    } else {
+      res.status(422).json({message: 'username must be a string'})
+    }
+  }
 
 const checkRegistration = (req, res, next) => {
-    if (!req.body.username || !req.body.password || !req.body.role){
+  if (!req.body.username || !req.body.password || !req.body.role){
         res.status(422).json({message: 'username, role, and password required'})
     } else {
         next()
@@ -53,5 +46,5 @@ const validateRoleName = (req, res, next) => {
 }
 
 module.exports = {
-    validateRoleName, checkRegistration, checkUsernameExists
+    validateRoleName, checkRegistration, checkUsernameExists, checkIfString
 }
