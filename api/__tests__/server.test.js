@@ -2,6 +2,12 @@ const request = require('supertest')
 const server = require('../server')
 const db = require('../data/db-config')
 
+const User = require("../users/users-model")
+
+const rob = {username: "Rob", password: "foobar", role: "renter"}
+const hazel = {username: "Hazel", password: "1234", role: "owner"}
+
+
 beforeAll(async () => {
   await db.migrate.rollback()
   await db.migrate.latest()
@@ -9,13 +15,13 @@ beforeAll(async () => {
 beforeEach(async () => {
   await db.seed.run()
 })
-afterAll(async (done) => {
+afterAll(async () => {
   await db.destroy()
-  done()
+  
 })
 
 it('sanity check', () => {
-  expect(true).not.toBe(false)
+  expect(true).toBe(true)
 })
 
 describe('server.js', () => {
