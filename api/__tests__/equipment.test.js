@@ -35,14 +35,5 @@ describe("[GET] / ", () => {
             expect(response.status).toBe(404)
         })
     })
-//     it("responds with JSON", async () =>{
-//         return request(server)
-//             .get("/")
-//             .set('Authorization', `Bearer ${token}`)
-//             .then((response) => {
-//                 expect(response.status).toBe(200)
-
-//             })
-//       })
-    })
+})
 
